@@ -4,6 +4,7 @@
  - User provides the desired state for API server by passing the namespace in which the API server needs to be provisioned and image version.
  - Custom controller creates/updates deployment and service.
  - It also records events
+ - Both standard and custom metrics are emitted.
 
 
 
@@ -231,3 +232,17 @@ Its always great to be able to debug an application and more so for a complex pi
 > - The error message suggests that Delve supports Go versions up to `1.16`, but you're likely using a newer version of Go. To resolve this, you'll need to update `Delve` to a version that supports your Go version. Here's how to do that:
     `go install github.com/go-delve/delve/cmd/dlv@latest`
 > - Once Delve is updated, you can try running the VS Code debugger again. The error should no longer appear.
+
+## Viewing metrics
+- By default, controller-runtime builds a global Prometheus registry and publishes a collection of performance metrics for each controller.
+- When controller starts, it listens on port `8443` (or whatever is configured in kubebuilder project) at either `http://<ip>:8443/metrics` or `https://<ip>:8443/metrics`.  Controller logs capture this as shown below:
+```
+controller-runtime.metrics	Starting metrics server
+controller-runtime.metrics	Serving metrics server	{"bindAddress": ":8443", "secure": false}
+```
+- The controller Pod exposes a Prometheus-compatible metrics endpoint at port 8443 by default. You can access it via `https://<controller-pod>:8443/metrics`.
+- To access the metrics, do the following:
+	- `kubectl port-forward quickstart-operator-controller-manager-5648d87d76-45n4p 8443:8443 -n quickstart-operator-system`
+	- Access: `http://localhost:8443/metrics`
+	- You should see the output. This has been captured in `metrics.txt`
+

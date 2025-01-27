@@ -15,6 +15,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/tools/record"
 	quickstartv1 "quickstart.com/api/v1"
+	metrics "quickstart.com/internal/metrics"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
@@ -185,6 +186,7 @@ func (r *APIServerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 
 	log.Info("Reconciliation complete")
 	r.Recorder.Event(apiServerCr, corev1.EventTypeNormal, "Reconciled", "Successfully reconciled API Server")
+	metrics.APIServerControllerSuccessTotal.WithLabelValues(apiServerCr.Spec.Version, apiServerCr.ObjectMeta.Namespace).Inc()
 	return ctrl.Result{}, nil
 
 }

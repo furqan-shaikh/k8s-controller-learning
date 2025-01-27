@@ -38,6 +38,8 @@ import (
 	quickstartv1 "quickstart.com/api/v1"
 	"quickstart.com/internal/controller"
 	// +kubebuilder:scaffold:imports
+
+	"quickstart.com/internal/metrics"
 )
 
 var (
@@ -159,6 +161,9 @@ func main() {
 		setupLog.Error(err, "unable to set up ready check")
 		os.Exit(1)
 	}
+
+	// Initialize custom metrics
+	metrics.InitMetrics()
 
 	setupLog.Info("starting manager")
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
