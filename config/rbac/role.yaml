@@ -43,3 +43,29 @@ rules:
   - list
   - update
   - watch
+- apiGroups:
+  - quickstart.quickstart.com
+  resources:
+  - apiservers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - quickstart.quickstart.com
+  resources:
+  - apiservers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - quickstart.quickstart.com
+  resources:
+  - apiservers/status
+  verbs:
+  - get
+  - patch
+  - update
