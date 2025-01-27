@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- quickstart_v1_apiserver.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples

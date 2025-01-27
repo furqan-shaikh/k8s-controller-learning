@@ -1,0 +1,10 @@
+apiVersion: quickstart.quickstart.com/v1
+kind: APIServer
+metadata:
+  labels:
+    app.kubernetes.io/name: quickstart-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: apiserver-sample
+  namespace: user-service
+spec:
+  version: 1.0.1

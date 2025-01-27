@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-go-rest-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: simple-go-rest-api
+  template:
+    metadata:
+      labels:
+        app: simple-go-rest-api
+    spec:
+      containers:
+      - name: rest-api
+        image: simple-go-rest-api:latest
+        ports:
+        - containerPort: 8089
+        env:
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

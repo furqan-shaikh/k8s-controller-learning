@@ -1,0 +1,23 @@
+# permissions for end users to view apiservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: quickstart-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: apiserver-viewer-role
+rules:
+- apiGroups:
+  - quickstart.quickstart.com
+  resources:
+  - apiservers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - quickstart.quickstart.com
+  resources:
+  - apiservers/status
+  verbs:
+  - get
